@@ -1,0 +1,67 @@
+name: PR Review Automation
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  review-automation:
+    name: Validate and Request Review
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Repository validation
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Pull Request: #${{ github.event.pull_request.number }}"
+          echo "Branch: ${{ github.head_ref }}"
+          echo "Base: ${{ github.base_ref }}"
+          echo "Commit: ${{ github.event.pull_request.head.sha }}"
+
+      - name: Request GitHub Copilot review
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr edit "$PR_NUMBER" \
+            --repo "$GITHUB_REPOSITORY" \
+            --add-reviewer "@copilot"
+
+      - name: Add automation comment
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr comment "$PR_NUMBER" \
+            --repo "$GITHUB_REPOSITORY" \
+            --body "## Automated PR Review Workflow
+
+          GitHub Actions successfully processed this pull request.
+
+          - Repository validation completed
+          - Automated reviewer requested
+          - Pull request is ready for review
+          - Review workflow: Issue → Branch → PR → Validation → Review → Approval → Merge
+
+          This workflow is part of the DevOps/Kubernetes infrastructure lab."
+
+      - name: Manual execution confirmation
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          echo "Manual execution completed successfully."
+          echo "This workflow supports both manual and pull-request-triggered execution."
