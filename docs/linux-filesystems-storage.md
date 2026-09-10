@@ -16,9 +16,7 @@ The lab host uses a 30 GB NVMe root disk.
 
 Command:
 
-```bash
-lsblk ```
-
+    lsblk
 ### Observed storage layout:
 
 nvme0n1 - 30G primary disk
