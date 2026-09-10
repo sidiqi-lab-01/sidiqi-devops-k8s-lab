@@ -18,13 +18,9 @@ The primary package management tools used are:
 - `dpkg` - Debian package database and package inspection
 - `dpkg-query` - package version queries
 
-APT version:
-
-```text
-apt 2.8.3 (amd64)
+    apt 2.8.3 (amd64)
 
 Inspecting Available Updates
-
 The following command identifies packages with available updates:
 
 apt list --upgradable
