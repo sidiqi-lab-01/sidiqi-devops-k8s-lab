@@ -1,0 +1,3 @@
+---
+web_server_environment: "staging"
+web_server_title: "Sidiqi DevOps Ansible Lab - Group Variable"

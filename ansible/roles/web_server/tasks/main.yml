@@ -46,3 +46,23 @@
       role=web_server
       environment={{ web_server_environment }}
       host={{ inventory_hostname }}
+
+- name: Validate Vault variables inside role scope
+  ansible.builtin.assert:
+    that:
+      - vault_lab_api_key is defined
+      - vault_lab_service_account is defined
+      - vault_lab_api_key is not none
+      - vault_lab_service_account is not none
+      - (vault_lab_api_key | string | length) > 0
+      - (vault_lab_service_account | string | length) > 0
+    success_msg: "Vault variables are valid inside role scope"
+
+- name: Deploy Vault-protected application secret
+  ansible.builtin.template:
+    src: devops-lab-secret.conf.j2
+    dest: "{{ managed_secret_file_path }}"
+    owner: root
+    group: root
+    mode: "0600"
+  no_log: true
