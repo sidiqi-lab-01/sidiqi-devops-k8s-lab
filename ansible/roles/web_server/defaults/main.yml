@@ -1,0 +1,13 @@
+---
+web_server_package: nginx
+web_server_service: nginx
+web_server_root: /var/www/html
+web_server_index: index.html
+web_server_title: "Sidiqi DevOps Ansible Lab"
+web_server_environment: "production"
+web_server_owner: www-data
+web_server_group: www-data
+
+managed_user_name: devopsapp
+managed_user_shell: /bin/bash
+managed_file_path: /etc/devops-lab.conf
