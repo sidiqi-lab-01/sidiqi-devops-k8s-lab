@@ -1,0 +1,8 @@
+---
+- name: Configure managed web server
+  hosts: managed
+  become: true
+  gather_facts: true
+
+  roles:
+    - web_server

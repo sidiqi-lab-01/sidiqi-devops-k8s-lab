@@ -1,0 +1,48 @@
+---
+- name: Install web server package
+  ansible.builtin.apt:
+    name: "{{ web_server_package }}"
+    state: present
+    update_cache: true
+
+- name: Ensure web root exists
+  ansible.builtin.file:
+    path: "{{ web_server_root }}"
+    state: directory
+    owner: "{{ web_server_owner }}"
+    group: "{{ web_server_group }}"
+    mode: "0755"
+
+- name: Deploy managed web page
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: "{{ web_server_root }}/{{ web_server_index }}"
+    owner: "{{ web_server_owner }}"
+    group: "{{ web_server_group }}"
+    mode: "0644"
+  notify: Reload nginx
+
+- name: Ensure web server is enabled and running
+  ansible.builtin.service:
+    name: "{{ web_server_service }}"
+    enabled: true
+    state: started
+
+- name: Ensure managed application user exists
+  ansible.builtin.user:
+    name: "{{ managed_user_name }}"
+    shell: "{{ managed_user_shell }}"
+    state: present
+    create_home: true
+
+- name: Deploy managed configuration file
+  ansible.builtin.copy:
+    dest: "{{ managed_file_path }}"
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      managed_by=ansible
+      role=web_server
+      environment={{ web_server_environment }}
+      host={{ inventory_hostname }}
