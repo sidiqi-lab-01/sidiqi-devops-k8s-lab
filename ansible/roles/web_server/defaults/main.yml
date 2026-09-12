@@ -11,3 +11,5 @@ web_server_group: www-data
 managed_user_name: devopsapp
 managed_user_shell: /bin/bash
 managed_file_path: /etc/devops-lab.conf
+
+managed_secret_file_path: /etc/devops-lab-secret.conf
