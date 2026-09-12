@@ -1,0 +1,16 @@
+---
+- name: Validate Ansible control node
+  hosts: control
+  gather_facts: true
+
+  tasks:
+    - name: Verify Ansible connectivity
+      ansible.builtin.ping:
+
+    - name: Display operating system
+      ansible.builtin.debug:
+        msg: "Control node OS: {{ ansible_distribution }} {{ ansible_distribution_version }}"
+
+    - name: Display Python version
+      ansible.builtin.debug:
+        msg: "Python version: {{ ansible_python_version }}"
