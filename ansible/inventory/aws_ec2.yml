@@ -1,0 +1,23 @@
+---
+plugin: amazon.aws.aws_ec2
+
+regions:
+  - us-east-2
+
+filters:
+  instance-state-name: running
+  tag:Role: ansible-managed
+
+hostnames:
+  - tag:Name
+
+compose:
+  ansible_host: private_ip_address
+  ansible_user: "'ubuntu'"
+  ansible_ssh_private_key_file: "'~/.ssh/id_ed25519'"
+
+keyed_groups:
+  - key: tags.Role
+    prefix: role
+  - key: tags.Environment
+    prefix: environment
