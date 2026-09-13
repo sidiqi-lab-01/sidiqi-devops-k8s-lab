@@ -1,0 +1,8 @@
+
+# Local Docker Compose environment
+.env
+
+# Python generated files
+__pycache__/
+*.pyc
+*.pyo
