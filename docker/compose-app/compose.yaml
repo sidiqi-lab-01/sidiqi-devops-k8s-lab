@@ -21,7 +21,7 @@ services:
   users:
     build:
       context: ./users
-    image: sidiqi-compose-users:1.0
+    image: sidiqi-compose-users:1.1
     container_name: sidiqi-compose-users
     networks:
       - compose-network
@@ -40,7 +40,7 @@ services:
   orders:
     build:
       context: ./orders
-    image: sidiqi-compose-orders:1.0
+    image: sidiqi-compose-orders:1.1
     container_name: sidiqi-compose-orders
     environment:
       DB_HOST: db
@@ -68,7 +68,7 @@ services:
   api:
     build:
       context: ./api
-    image: sidiqi-compose-api:1.0
+    image: sidiqi-compose-api:1.1
     container_name: sidiqi-compose-api
     environment:
       USERS_SERVICE_URL: http://users:5001

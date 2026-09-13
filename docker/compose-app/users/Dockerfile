@@ -1,11 +1,17 @@
 FROM python:3.13-slim
 
+RUN addgroup --system appgroup \
+    && adduser --system --ingroup appgroup appuser
+
 WORKDIR /app
 
 COPY requirements.txt .
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app.py .
+COPY --chown=appuser:appgroup app.py .
+
+USER appuser
 
 EXPOSE 5001
 
