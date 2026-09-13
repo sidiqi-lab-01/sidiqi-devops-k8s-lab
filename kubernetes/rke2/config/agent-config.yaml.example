@@ -1,0 +1,17 @@
+# RKE2 Agent Configuration Template
+#
+# Copy to:
+# /etc/rancher/rke2/config.yaml
+#
+# Replace placeholders before use.
+# Never commit the real RKE2 registration token.
+
+server: https://RKE2_SERVER_PRIVATE_IP:9345
+
+token: REPLACE_WITH_RKE2_NODE_TOKEN
+
+node-name: rke2-worker-01
+
+node-label:
+  - "node-role=sidiqi-rke2-worker"
+  - "environment=lab"

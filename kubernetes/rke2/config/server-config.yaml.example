@@ -1,0 +1,32 @@
+# RKE2 Server Configuration Template
+#
+# Copy to:
+# /etc/rancher/rke2/config.yaml
+#
+# Replace placeholder values before use.
+# Do not commit real secrets or registration tokens.
+
+# Node identity
+node-name: rke2-server-01
+
+# Optional TLS names used to access the Kubernetes API.
+# Add private DNS names, load-balancer DNS names, or approved IP addresses.
+tls-san:
+  - rke2-server.example.internal
+
+# Kubernetes networking
+cluster-cidr: 10.42.0.0/16
+service-cidr: 10.43.0.0/16
+
+# Disable workload scheduling on control-plane nodes for production-style
+# separation. This may be adjusted for small development environments.
+node-taint:
+  - "CriticalAddonsOnly=true:NoExecute"
+
+# Protect the kubeconfig stored on the server.
+write-kubeconfig-mode: "0600"
+
+# Example labels
+node-label:
+  - "node-role=sidiqi-rke2-server"
+  - "environment=lab"
