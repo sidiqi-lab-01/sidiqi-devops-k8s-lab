@@ -13,7 +13,7 @@ DevOps/Kubernetes lab.
 - [Bash Commands](bash-commands.md)
 - [Linux Commands](linux-commands.md)
 - [AWS CLI Commands](aws-cli-commands.md)
-
+- [Kubernetes Commands](kubernetes-commands.md) — kubectl, nodes, pods, deployments, services, networking, configuration, storage, RBAC, RKE2, and troubleshooting commands.
 ## Purpose
 
 These references provide commonly used commands for:
